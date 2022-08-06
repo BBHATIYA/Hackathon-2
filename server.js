@@ -38,7 +38,7 @@ app.post("/register", async (req, res) => {
     })
     .catch((e) => {
       console.log(e);
-      res.json({ msg: "Email already exist" });
+      res.json({ msg: "Email already exist", status: 4 });
     });
 });
 

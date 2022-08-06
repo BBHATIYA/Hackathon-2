@@ -14,9 +14,13 @@ const sendPostData = () => {
     .then((res) => res.json())
     .then((data) => {
       console.log(data);
-      // const message = document.getElementById("message");
-      // message.innerText = data.msg;
-      window.location.href = "http://localhost:3000/login.html";
+
+      if (data.status === 4) {
+        const message = document.getElementById("message");
+        message.innerText = data.msg;
+      } else {
+        window.location.href = "http://localhost:3000/login.html";
+      }
     })
     .catch((e) => {
       console.log(e);
