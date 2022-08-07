@@ -68,6 +68,7 @@ const sendGetData = () => {
     });
 };
 
+// when page load printing news of default Israel country
 function getNewsData(val) {
   fetch(
     `http://newsapi.org/v2/everything?q=${val}&apiKey=a3b897852a274e0c86d0af39cc3dfbe5`
@@ -83,6 +84,7 @@ function getNewsData(val) {
 }
 getNewsData("Israel");
 
+// when user search by country it will replace the default news and print by the country user searched
 document.getElementById("button").addEventListener("click", function () {
   const searchValue = document.getElementById("search").value;
   getNewsData(searchValue);
