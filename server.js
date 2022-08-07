@@ -3,6 +3,7 @@ const knex = require("knex");
 const bcrypt = require("bcrypt");
 const app = express();
 
+//connecting with database
 const db = knex({
   client: "pg",
   connection: {
@@ -14,11 +15,13 @@ const db = knex({
   },
 });
 
+//route for all static files
 app.use("/", express.static(__dirname + "/public"));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+//listen to the server port 3000
 app.listen(3000, () => {
   console.log("server is running on port 3000");
 });
@@ -28,6 +31,7 @@ app.get("/news", (req, res) => {
   res.json({ msg: "OK GOOD", status: 200 });
 });
 
+//using post method
 app.post("/register", async (req, res) => {
   console.log(req.body);
   const salt = await bcrypt.genSalt();
@@ -42,6 +46,7 @@ app.post("/register", async (req, res) => {
     });
 });
 
+//allow user to login only if password and email is correct
 app.post("/login", async (req, res) => {
   console.log(req.body);
   getUser(req.body.email)
@@ -64,12 +69,14 @@ app.post("/login", async (req, res) => {
     });
 });
 
+//insert data to pg admin
 function saveUser(fname, lname, email, password) {
   return db("newsusers")
     .insert({ fname, lname, email, password })
     .returning("id");
 }
 
+//getting users
 function getUser(email) {
   return db("newsusers")
     .select("id", "fname", "lname", "email", "password")
